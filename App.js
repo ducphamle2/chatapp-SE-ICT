@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import Main from './app/Main';
-import store from '../chatapp_mobile/app/redux/stores/store';
+import store from './app/redux/stores/store';
 
 export default class App extends Component {
   render() {

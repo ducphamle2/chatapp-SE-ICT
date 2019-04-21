@@ -29,8 +29,8 @@ class Login extends Component {
     super(props);
     // state is set because username & password will change a lot
     this.state = {
-      username: '',
-      password: '',
+      username: 'ducphamle212',
+      password: '123456',
       loginErrorMessage: ''
     };
 
