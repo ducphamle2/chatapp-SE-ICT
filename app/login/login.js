@@ -23,6 +23,7 @@ import LoginStyle from '../assets/styles/LoginStyle';
 import images from '../assets/image_source/Images';
 import BackGroundImage from '../assets/background/BackGroundImage';
 import validation from '../utils/validations/Validation'
+import api from '../config/Api';
 
 class Login extends Component {
   constructor(props) {
@@ -41,6 +42,8 @@ class Login extends Component {
   handleLogin() {
     const { dispatch } = this.props;
     const { username, password, loginErrorMessage } = this.state;
+    const payload = { username, password };
+    api.authenticate(payload, this.onHandle)
     if (username === 'ducphamle212' && password === '123456') { // fixed data
       // set time out here to wait for dispatch to finish (change isLoginSucess to true so we can move to other screens)
       setTimeout(() => {

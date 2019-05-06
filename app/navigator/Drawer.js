@@ -34,7 +34,7 @@ const StackNavigator = createStackNavigator(
         }
     },
     {
-        navigationOptions: ({ navigation }) => ({
+        navigationOptions: ({ navigation }) => ({ // navigation here is used for the header buttons
             // the button that toggle the drawer
             headerLeft: (
                 <TouchableOpacity
@@ -47,10 +47,10 @@ const StackNavigator = createStackNavigator(
             ),
             //header: <LogoTitle/>,
             headerRight: (
-                <View style={{ flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row'}}>
                     <TouchableOpacity
                     >
-                        <Image style={{ marginRight: 10 }} source={images.search} />
+                        <Image style={{ marginRight: 10, tintColor: '#000000'}} source={images.search} />
                     </TouchableOpacity>
 
                     <TouchableOpacity
