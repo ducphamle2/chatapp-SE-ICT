@@ -16,7 +16,7 @@ import IconSidebar from '../render_component/IconSideBar';
 class SideBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { isConfirm: false };
+    this.state = { isConfirm: false }; //is used to check if the logout popup choice, if true then a popup will show up.
   }
 
   getProfile() {
@@ -24,19 +24,29 @@ class SideBar extends Component {
   }
 
   getStaffInfo() {
-    
+
   }
 
+  /*
+    how to run logout: Because we have Main.js which listens to the isLoginSuccess state
+    if isLoginSuccess = true => at Home scene, if not then it will move to the Login scene
+    So in order to logout, we just need to set isLoginSuccess to false, and other information to null to reset the app.
+  */
   logout() {
-
+    const { username } = this.props;
+    console.log('username logout: ========', username);
+    this.setState({ isConfirm: true });
   }
 
   handleConfirm() {
-
+    const { dispatch } = this.props;
+    console.log('Confirm logout !!!!!!!!!!!!');
+    dispatch(LoginAction.clearLoginState());
   }
 
   handleCancelConfirm() {
-
+    console.log('Cancel confirm');
+    this.setState({ isConfirm: false }); // change to false will close the popup
   }
 
   render() {
@@ -59,15 +69,15 @@ class SideBar extends Component {
               <View />
               <View style={userInfoNav}>
                 {!StringUtil.isEmpty(username) ? (
-                    <ImageProfile
-                      url={images.user}
-                      content={
-                        !StringUtil.isEmpty(username)
-                          ? 'Phạm Lê Đức'
-                          : ''
-                      }
-                    />
-                  ) : null}
+                  <ImageProfile
+                    url={images.user}
+                    content={
+                      !StringUtil.isEmpty(username)
+                        ? 'Phạm Lê Đức'
+                        : ''
+                    }
+                  />
+                ) : null}
               </View>
             </View>
             <PopupLogout

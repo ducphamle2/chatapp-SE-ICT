@@ -7,10 +7,11 @@ const style = StyleSheet.create({
         fontFamily: 'Josefin Sans',
         fontWeight: 'bold',
         fontSize: 16,
-        color: '#044128'
+        color: '#000000'
     }
 });
 
+// used to render the side options like settings, logout etc with custom styles in icons and text
 class IconSidebar extends React.Component {
     render() {
         const { source, onPress, content } = this.props;
@@ -19,7 +20,7 @@ class IconSidebar extends React.Component {
             // <TouchableOpacity onPress={onPress}>
             <ListItem onPress={onPress} icon>
                 <Left>
-                    <Image source={source} />
+                    <Image style={{ tintColor: '#3FA1F6'}} source={source} />
                 </Left>
                 <Body>
                     <Text style={contentStyle}>{content}</Text>

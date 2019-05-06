@@ -41,6 +41,7 @@ class Login extends Component {
   handleLogin() {
     const { dispatch } = this.props;
     const { username, password, loginErrorMessage } = this.state;
+    console.log('username: ' + username)
     if (username === 'ducphamle212' && password === '123456') { // fixed data
       // set time out here to wait for dispatch to finish (change isLoginSucess to true so we can move to other screens)
       setTimeout(() => {
@@ -71,7 +72,7 @@ class Login extends Component {
         marginTop: 12,
         color: '#DB1E4A',
         fontSize: 12.5
-        }}>{loginErrorMessage}</Text>;
+      }}>{loginErrorMessage}</Text>;
     }
   }
 

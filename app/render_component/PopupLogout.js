@@ -8,6 +8,7 @@ const { width, height } = Dimensions.get('window');
 
 const widPopup = (width * 4) / 5;
 
+// this class is used to popup a logout alert for the users to confirm logout or not
 class PopupLogout extends Component {
   render() {
     const { cancelConfirm, isConfirm, confirm, message, nameBtnTop, nameBtnBot } = this.props;
