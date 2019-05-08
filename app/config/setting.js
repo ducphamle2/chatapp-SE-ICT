@@ -1,13 +1,13 @@
 // set path for axios http
 const setPath = {
-  ApiHost: 'http://localhost:3000/',
+  ApiHost: 'http://192.168.157.2:3000/', //correct localhost for genymotion
   ApiSubPath: 'api',
   slash: '/'
 };
+// https://bbowden.tumblr.com/post/58650831283/accessing-a-localhost-server-from-the-genymotion
 
 const apiUrl = build(
   setPath.ApiHost,
-  setPath.slash,
   setPath.ApiSubPath,
   setPath.slash
 );

@@ -1,20 +1,24 @@
 import axios from "axios";
 const url = {
-  LOGIN: "login"
+  LOGIN: 'login'
 };
 
 function authenticate(payload, callback) {
-  axios({
-    method: 'post',
-    url: url.LOGIN,
-    data: payload
-  })
-  .then(response => {
-    callback(true, response, null);
-  })
-  .catch(error => {
-    callback(false, null, error);
-  })
+  axios
+    .post(url.LOGIN, {
+      data: {
+        username: payload.username,
+        password: payload.password
+      }
+    })
+    .then(response => {
+      console.log('respone: ', payload);
+      callback(true, response, null);
+    })
+    .catch(error => {
+      console.log('error: ', payload);
+      callback(false, null, error);
+    });
 }
 
 const api = {

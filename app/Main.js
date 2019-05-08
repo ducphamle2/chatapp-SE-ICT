@@ -18,6 +18,7 @@ class Main extends Component {
     super(props);
 
     axios.defaults.baseURL = setting.apiUrl;
+    console.log('default URL: ', axios.defaults.baseURL);
     axios.defaults.timeout = 30000;
     axios.defaults.headers = {
       Accept: "application/json",

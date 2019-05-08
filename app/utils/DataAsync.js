@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 // this is used to receive data with a given key (which is an object)
 const getData = async key => { // inner function that calls getItem function from AsyncStorage

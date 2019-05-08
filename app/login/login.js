@@ -22,7 +22,7 @@ import StateUtil from '../utils/StateUtil';
 import LoginStyle from '../assets/styles/LoginStyle';
 import images from '../assets/image_source/Images';
 import BackGroundImage from '../assets/background/BackGroundImage';
-import validation from '../utils/validations/Validation'
+import validation from '../utils/validations/Validation';
 import api from '../config/Api';
 
 class Login extends Component {
@@ -43,7 +43,7 @@ class Login extends Component {
     const { dispatch } = this.props;
     const { username, password, loginErrorMessage } = this.state;
     const payload = { username, password };
-    api.authenticate(payload, this.onHandle)
+    api.authenticate(payload, this.onHandle.bind(this));
     if (username === 'ducphamle212' && password === '123456') { // fixed data
       // set time out here to wait for dispatch to finish (change isLoginSucess to true so we can move to other screens)
       setTimeout(() => {
@@ -62,6 +62,15 @@ class Login extends Component {
       else {
         this.setState({ loginErrorMessage: 'This user does not exist' });
       }
+    }
+  }
+
+  onHandle(isSuccess, response, error) {
+    if (isSuccess) {
+      console.log('response: ' + response);
+    }
+    else {
+      console.log('Error message: ' + error);
     }
   }
 
