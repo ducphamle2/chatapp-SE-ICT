@@ -7,6 +7,7 @@ import ActionType from '../ActionTypes';
 const LoginReducer = (
   state = {
     isLoginSuccess: false,
+    registerEnter: false,
     username: '',
     password: ''
   }, action) => {
@@ -29,6 +30,12 @@ const LoginReducer = (
       return {
         ...state,
         username: payload
+      }
+    case ActionType.REGISTER_ENTER:
+      return {
+        ...state,
+        isLoginSuccess: false,
+        registerEnter: payload
       }
     default:
       return state;

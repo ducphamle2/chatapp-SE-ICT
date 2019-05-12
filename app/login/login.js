@@ -24,15 +24,21 @@ import images from '../assets/image_source/Images';
 import BackGroundImage from '../assets/background/BackGroundImage';
 import validation from '../utils/validations/Validation';
 import api from '../config/Api';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import register from '../login/register';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     // state is set because username & password will change a lot
     this.state = {
-      username: 'ducphamle212',
-      password: '123456',
-      loginErrorMessage: ''
+      //username: 'ducphamle212@gmail.com',
+      //password: 'Pabcdef3#',
+      username: '',
+      password: '',
+      loginErrorMessage: '',
+      color: '#DB1E4A',
+      isClicked: false,
     };
 
     StateUtil.resetState(); // here when we get to Login component, all the states have to be reset.
@@ -41,10 +47,11 @@ class Login extends Component {
   // when user hit the login button
   handleLogin() {
     const { dispatch } = this.props;
-    const { username, password, loginErrorMessage } = this.state;
+    const { username, password } = this.state;
     const payload = { username, password };
-    api.authenticate(payload, this.onHandle.bind(this));
-    if (username === 'ducphamle212' && password === '123456') { // fixed data
+    console.log('payload in handle Login: ', payload);
+    api.login(payload, this.onHandle.bind(this));
+    if (username === 'ducphamle212@gmail.com' && password === 'Pabcdef3#') { // fixed data
       // set time out here to wait for dispatch to finish (change isLoginSucess to true so we can move to other screens)
       setTimeout(() => {
         dispatch(LoginAction.isLoginSuccess(true));
@@ -87,6 +94,12 @@ class Login extends Component {
     }
   }
 
+  onHandleRegister() {
+    const { dispatch } = this.props;
+    console.log('before entering register');
+    dispatch(LoginAction.registerEnter(true));
+  }
+
   render() {
     const styles = StyleSheet.create({
       container: {
@@ -98,7 +111,7 @@ class Login extends Component {
       }
     })
     const { username, password } = this.state;
-    const { loginButtonText, loginButton, loginText } = LoginStyle;
+    const { loginButtonText, loginButton, loginText, signUpButton, signUpButtonText, findButtonText, findButton } = LoginStyle;
     return (
       <ScrollView keyboardShouldPersistTaps="always">
         <View style={{ flex: 1 }}>
@@ -168,34 +181,52 @@ class Login extends Component {
                 <Text style={loginButtonText}>SIGN IN</Text>
               </TouchableHighlight>
 
-              <Text style={[loginText,
-                {
-                  marginLeft: 150,
-                  marginTop: -5
-                }]}>
-                Forgot password ?
-                </Text>
-
-              <Text style={[loginText,
-                {
-                  marginLeft: 109,
-                  marginTop: 10
-                }]}>
-                Do not have an account ? <Text style={{
-                  color: '#DB1E4A',
-                  fontSize: 12.5
-                }}>SIGN UP</Text>
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={[loginText,
+                  {
+                    marginLeft: 150,
+                    marginTop: -5
+                  }]}>
+                  Forgot password ?
               </Text>
+
+                <TouchableHighlight
+                  disabled={false}
+                  style={findButton}
+                  onPress={() => { console.log('hit') }}
+                >
+                  <Text style={findButtonText}>FIND IT</Text>
+                </TouchableHighlight>
+              </View>
+
+              <View style={{ flexDirection: 'row' }}>
+                <Text style={[loginText,
+                  {
+                    marginLeft: 109,
+                  }]}>
+                  Do not have an account ?
+              </Text>
+
+                <TouchableHighlight
+                  disabled={false}
+                  style={signUpButton}
+                  onPress={this.onHandleRegister.bind(this)} // set state to true
+                >
+                  <Text style={signUpButtonText}>SIGN UP</Text>
+                </TouchableHighlight>
+              </View>
+
             </View>
           </View>
         </View>
-      </ScrollView>
+      </ScrollView >
     );
   }
 }
 
 export default connect(state => ({
   isLoginSuccess: state.LoginReducer.isLoginSuccess,
+  registerEnter: state.LoginReducer.registerEnter,
   username: state.LoginReducer.username,
   password: state.LoginReducer.password
 }))(Login);

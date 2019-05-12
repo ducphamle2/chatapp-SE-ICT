@@ -12,6 +12,7 @@ import StringUtil from './utils/StringUtils';
 import DataAsync from './utils/DataAsync';
 import { myLoginConstant } from './utils/Constants';
 import axios from "axios";
+import Register from './login/register';
 
 class Main extends Component {
   constructor(props) {
@@ -71,16 +72,20 @@ class Main extends Component {
   }
 
   render() {
-    const { isLoginSuccess } = this.props;
-    switch (isLoginSuccess) {
-      case true:
-        return <StackHome />;
-      default:
-        return <Login />;
+    const { isLoginSuccess , registerEnter} = this.props;
+    if (!isLoginSuccess && registerEnter) {
+      return <Register/>;
+    }
+    else if (isLoginSuccess) {
+      return <StackHome/>;
+    }
+    else {
+      return <Login/>;
     }
   }
 }
 
 export default connect(state => ({
-  isLoginSuccess: state.LoginReducer.isLoginSuccess
+  isLoginSuccess: state.LoginReducer.isLoginSuccess,
+  registerEnter: state.LoginReducer.registerEnter
 }))(Main);
