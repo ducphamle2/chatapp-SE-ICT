@@ -21,7 +21,8 @@ class SideBar extends Component {
   }
 
   getProfile() {
-
+    const { navigate } = this.props.navigation;
+    navigate('Profile');
   }
 
   getStaffInfo() {

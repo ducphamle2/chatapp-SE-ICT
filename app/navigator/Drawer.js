@@ -123,6 +123,7 @@ class LogoTitle extends Component {
 					textColor={'#FFFFFF'}
 					itemColor={'#000000'}
 					selectedItemColor={'#3FA1F6'}
+					fontWeight={'bold'}
 				/>
 			</View>
 		)

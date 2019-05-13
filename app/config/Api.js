@@ -4,7 +4,7 @@ const url = {
   REGISTER: 'register'
 };
 
-function authenticate(payload, callback) {
+function login(payload, callback) {
   console.log('payload at auth: ', payload);
   axios({
     method: 'POST',
@@ -35,7 +35,7 @@ function register(payload, callback) {
 }
 
 const api = {
-  authenticate,
+  login,
   register
 }
 

@@ -14,7 +14,8 @@ import {
 	Dimensions,
 	ImageBackground,
 	Picker,
-	StyleSheet
+	StyleSheet,
+	Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import LoginAction from '../redux/actions/LoginAction';
@@ -48,22 +49,36 @@ class Register extends Component {
 		}
 	}
 
-	async handleRegister() {
+	handleRegister() {
 		const { dispatch } = this.props;
 		const { username, password, passwordTwo } = this.state;
 		//api.register(payload, this.onHandle.bind(this));
-		if (password === passwordTwo && password !== '' && username !== '' && username <= 50 && password <= 20) {
+		// check if all the inputs are valid or not
+		if (password === passwordTwo && password !== '' && username !== '' && username.length <= 50 && password.length <= 20) {
 			const payload = { username, password };
 			console.log('payload in handle register: ', payload);
-			await api.register(payload, this.handleRegisterResponse.bind());
 			setTimeout(() => {
-				dispatch(LoginAction.registerEnter(false)); // false so we can return to our login component
+				Alert.alert(
+					'Confirmation',
+					'Are you sure you want to register ?',
+					[
+						{ text: 'No', onPress: () => { console.log('cancel pressed') }, style: 'cancel' },
+						{
+							text: 'Yes', onPress: async () => {
+								// if valid then we send data to our api to handle
+								await api.register(payload, this.handleRegisterResponse.bind());
+								dispatch(LoginAction.registerEnter(false)); // false so we can return to our login component
+							}
+						}
+					],
+					{ cancelable: true }
+				);
 			}, 200);
 		}
 		else {
 			// check if input are valid or not
-			if (username > 50 || password > 20) {
-				this.setState({ loginErrorMessage: 'username or password length is too long (max 50 and 20)' });
+			if (username.length > 50 || password.length > 20) {
+				this.setState({ loginErrorMessage: 'Username or password length is too long (max 50 and 20)' });
 			}
 			else if (username === '' || password === '') {
 				this.setState({ loginErrorMessage: 'Please type username or password' });
@@ -71,8 +86,11 @@ class Register extends Component {
 			else if (passwordTwo === '') {
 				this.setState({ loginErrorMessage: 'Please type again your password' });
 			}
+			else if (password !== passwordTwo) {
+				this.setState({ loginErrorMessage: 'Two passwords are not identical' });
+			}
 			else {
-				this.setState({ loginErrorMessage: 'This user does not exist' });
+				this.setState({ loginErrorMessage: 'There is something wrong, please try again' });
 			}
 		}
 	}
@@ -80,9 +98,25 @@ class Register extends Component {
 	handleRegisterResponse(isSuccess, response, error) {
 		if (isSuccess) {
 			console.log('is success', response);
+			Alert.alert(
+				'Notification',
+				'You have successfully registered. You can now use your newly account to login to the application',
+				[{
+					text: 'OK',
+					onPress: () => { }
+				}]
+			);
 		}
 		else {
-			console.log('error: ' , error);
+			console.log('error: ', error);
+			Alert.alert(
+				'Notification',
+				'There is an error in your registration, sorry !!',
+				[{
+					text: 'OK',
+					onPress: () => { }
+				}]
+			);
 		}
 	}
 
@@ -95,12 +129,12 @@ class Register extends Component {
 
 	render() {
 		const { loginButtonText, loginButton, loginText, signUpButton, signUpButtonText, findButtonText, findButton } = LoginStyle;
-		const { username, password } = this.state;
+		const { username, password, passwordTwo } = this.state;
 		return (
 			<View style={{ flex: 1, flexDirection: 'column' }}>
 				<Header
 					containerStyle={{
-						backgroundColor: '#3399CC',
+						backgroundColor: '#3FA1F6',
 						justifyContent: 'center',
 						height: 70
 					}}
@@ -123,7 +157,7 @@ class Register extends Component {
 						E-mail Address
                 </Text>
 					{/* border color is the color line under the Input component */}
-					<Item style={{ marginLeft: 50, marginRight: 50, borderColor: '#3399CC' }}>
+					<Item style={{ marginLeft: 50, marginRight: 50, borderColor: '#3FA1F6' }}>
 						<Input
 							autoCorrect={false}
 							autoCapitalize="none"
@@ -172,8 +206,8 @@ class Register extends Component {
 							inputFontSize={10}
 							secureTextEntry
 							underlineColorAndroid="transparent"
-							onChangeText={txt => this.setState({ password: txt })}
-							value={password}
+							onChangeText={txt => this.setState({ passwordTwo: txt })}
+							value={passwordTwo}
 							maxLength={20}
 						/>
 					</Item>

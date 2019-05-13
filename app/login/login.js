@@ -14,7 +14,8 @@ import {
   Dimensions,
   ImageBackground,
   Picker,
-  StyleSheet
+  StyleSheet,
+  Alert
 } from 'react-native';
 import { connect } from 'react-redux';
 import LoginAction from '../redux/actions/LoginAction';
@@ -46,38 +47,55 @@ class Login extends Component {
 
   // when user hit the login button
   handleLogin() {
-    const { dispatch } = this.props;
     const { username, password } = this.state;
     const payload = { username, password };
     console.log('payload in handle Login: ', payload);
-    api.login(payload, this.onHandle.bind(this));
-    if (username === 'ducphamle212@gmail.com' && password === 'Pabcdef3#') { // fixed data
-      // set time out here to wait for dispatch to finish (change isLoginSucess to true so we can move to other screens)
-      setTimeout(() => {
-        dispatch(LoginAction.isLoginSuccess(true));
-        dispatch(LoginAction.setUsername(username)); // set username for later use
+    if (password !== '' && username !== '' && username.length <= 50 && password.length <= 20) {
+      const payload = { username, password };
+      console.log('payload in handle login: ', payload);
+      setTimeout(async () => {
+        await api.login(payload, this.onHandle.bind(this));
       }, 200);
     }
     else {
       // check if input are valid or not
-      if (username > 50 || password > 20) {
+      if (username.length > 50 || password.length > 20) {
         this.setState({ loginErrorMessage: 'username or password length is too long (max 50 and 20)' });
       }
       else if (username === '' || password === '') {
         this.setState({ loginErrorMessage: 'Please type username or password' });
       }
       else {
-        this.setState({ loginErrorMessage: 'This user does not exist' });
+        this.setState({ loginErrorMessage: 'There is something wrong' });
       }
     }
   }
 
   onHandle(isSuccess, response, error) {
+    const { dispatch } = this.props;
     if (isSuccess) {
-      console.log('response: ' + response);
+      console.log('response: ', response);
+      // if successfully login
+      if (response.request.status === 200) {
+        console.log('SUCESSFULLYYYYYYY');
+        setTimeout(() => {
+          dispatch(LoginAction.setUsername(this.state.username)); // set username to current username for later use
+        }, 200);
+        dispatch(LoginAction.isLoginSuccess(true)); // set to true to move to Home
+      }
     }
     else {
-      console.log('Error message: ' + error);
+      if (error.request.status === 422) {
+        console.log('User does not exist or wrong pass');
+        Alert.alert(
+          'Notification',
+          'User does not exist or wrong pass',
+          [
+            { text: 'OK', onPress: () => { console.log('OK pressed') }, style: 'cancel' },
+          ],
+          { cancelable: false }
+        );
+      }
     }
   }
 
@@ -194,7 +212,8 @@ class Login extends Component {
                   disabled={false}
                   style={findButton}
                   onPress={() => { console.log('hit') }}
-                >
+                  fontWeight='bold'
+              >
                   <Text style={findButtonText}>FIND IT</Text>
                 </TouchableHighlight>
               </View>
@@ -202,7 +221,7 @@ class Login extends Component {
               <View style={{ flexDirection: 'row' }}>
                 <Text style={[loginText,
                   {
-                    marginLeft: 109,
+                    marginLeft: 130,
                   }]}>
                   Do not have an account ?
               </Text>
