@@ -33,10 +33,10 @@ class Login extends Component {
     super(props);
     // state is set because username & password will change a lot
     this.state = {
-      //username: 'ducphamle212@gmail.com',
-      //password: 'Pabcdef3#',
-      username: '',
-      password: '',
+      username: 'ducphamle212@gmail.com',
+      password: 'Pabcdef3#',
+      //username: '',
+      //password: '',
       loginErrorMessage: '',
       color: '#DB1E4A',
       isClicked: false,

@@ -4,5 +4,4 @@ export const myLoginConstant = {
   REMEMBER_ACCOUNT: 'isRemember',
   REMEMBER: 'remember',
   X_KEY: 'x_key',
-  LANGUAGE: 'language'
 };

@@ -4,9 +4,11 @@
 
 import { combineReducers } from 'redux';
 import LoginReducer from '../reducers/LoginReducer';
+import UserInfoReducer from '../reducers/UserInfoReducer';
 
 const appReducer = combineReducers( {
-  LoginReducer
+  LoginReducer,
+  UserInfoReducer,
 } )
 
 // this RootReducer is used to wrap all the reducers into one, and store this inside a store.

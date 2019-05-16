@@ -1,7 +1,9 @@
 import axios from "axios";
 const url = {
   LOGIN: 'login',
-  REGISTER: 'register'
+  REGISTER: 'register',
+  GET_INFO: 'getInfo',
+  SET_INFO: 'setInfo',
 };
 
 function login(payload, callback) {
@@ -34,9 +36,39 @@ function register(payload, callback) {
     });
 }
 
+function getInfo(payload, callback) {
+  axios({
+    method: 'POST',
+    url: url.GET_INFO,
+    data: payload
+  })
+    .then(response => {
+      callback(true, response, null);
+    })
+    .catch(error => {
+      callback(false, null, error);
+    });
+}
+
+function setInfo(payload, callback) {
+  axios({
+    method: 'POST',
+    url: url.SET_INFO,
+    data: payload
+  })
+    .then(response => {
+      callback(true, response, null);
+    })
+    .catch(error => {
+      callback(false, null, error);
+    });
+}
+
 const api = {
   login,
-  register
+  register,
+  getInfo,
+  setInfo,
 }
 
 export default api;

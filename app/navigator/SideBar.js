@@ -22,7 +22,8 @@ class SideBar extends Component {
 
   getProfile() {
     const { navigate } = this.props.navigation;
-    navigate('Profile');
+    const { username } = this.props;
+    navigate('Profile', {username});
   }
 
   getStaffInfo() {
@@ -126,6 +127,7 @@ class SideBar extends Component {
   }
 }
 
+// these two variables will become SideBar's props
 export default connect(state => ({
   isLoginSuccess: state.LoginReducer.isLoginSuccess,
   username: state.LoginReducer.username,

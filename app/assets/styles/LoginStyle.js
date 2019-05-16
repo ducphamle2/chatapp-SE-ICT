@@ -55,7 +55,7 @@ const LoginStyle = StyleSheet.create({
         shadowColor: '#D2D2D2',
         shadowOffset: { width: 0, height: 3 },
         shadowRadius: 6,
-        shadowOpacity: 1.0
+        shadowOpacity: 0.5
     },
     signUpButton: {
         marginLeft: 5,

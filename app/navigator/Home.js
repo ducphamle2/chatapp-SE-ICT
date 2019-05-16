@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, FlatList, Dimensions, Alert } from 'reac
 import images from '../assets/image_source/Images';
 import Swipeout from 'react-native-swipeout'; 
 import ActionButton from 'react-native-action-button'; // doc: https://github.com/mastermoo/react-native-action-button
+import AddModal from '../render_component/AddModal';
 
 const { width } = Dimensions.get('window');
 
@@ -128,7 +129,13 @@ export default class Home extends Component {
 		this.state = {
 			isDeleted: false,
 		}
+		this.handleAddButton = this.handleAddButton.bind(this);
 	}
+
+	handleAddButton() {
+		this.refs.addModal.showAddModal();
+	}
+
 	// this function will be used to set state which makes the Home component render again - refresh our list
 	refreshFlatList = () => {
 		this.setState({isDeleted: true});
@@ -151,9 +158,13 @@ export default class Home extends Component {
 					}}
 				>
 				</FlatList>
-				<ActionButton buttonColor='#DF2929' onPress={() => { console.log("hi") }}>
+				<ActionButton buttonColor='#DF2929' onPress={this.handleAddButton.bind()}>
 					
 				</ActionButton>
+
+				<AddModal ref={'addModal'} parentFlatList={this}>
+
+				</AddModal>
 			</View>
 		);
 	}
