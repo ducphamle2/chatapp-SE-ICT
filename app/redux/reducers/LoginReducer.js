@@ -9,7 +9,8 @@ const LoginReducer = (
     isLoginSuccess: false,
     registerEnter: false,
     username: '',
-    password: ''
+    password: '',
+    token: '',
   }, action) => {
   const { type, payload } = action;
   switch (type) {
@@ -24,12 +25,18 @@ const LoginReducer = (
         ...state,
         isLoginSuccess: false,
         username: '',
-        password: ''
+        password: '',
+        token: '',
       }
     case ActionType.SET_USERNAME:
       return {
         ...state,
         username: payload
+      }
+    case ActionType.SET_TOKEN:
+      return {
+        ...state,
+        token: payload
       }
     case ActionType.REGISTER_ENTER:
       return {

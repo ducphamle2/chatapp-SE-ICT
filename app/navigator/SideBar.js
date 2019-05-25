@@ -13,6 +13,8 @@ import ImageProfile from '../assets/image_source/ImageProfile';
 import styles from '../assets/styles/sideBarStyle';
 import PopupLogout from '../render_component/PopupLogout';
 import IconSidebar from '../render_component/IconSideBar';
+import DataAsync from '../utils/DataAsync';
+import { myLoginConstant } from '../utils/Constants';
 
 class SideBar extends Component {
   constructor(props) {
@@ -23,11 +25,17 @@ class SideBar extends Component {
   getProfile() {
     const { navigate } = this.props.navigation;
     const { username } = this.props;
-    navigate('Profile', {username});
+    navigate('Profile', { username });
   }
 
-  getStaffInfo() {
+  getFeedback() {
+    const { navigate } = this.props.navigation;
+    navigate('Feedback');
+  }
 
+  getSettings() {
+    const { navigate } = this.props.navigation;
+    navigate('Example');
   }
 
   /*
@@ -44,6 +52,13 @@ class SideBar extends Component {
   handleConfirm() {
     const { dispatch } = this.props;
     console.log('Confirm logout !!!!!!!!!!!!');
+    DataAsync.removeData(myLoginConstant.REMEMBER_USERNAME);
+    DataAsync.removeData(myLoginConstant.REMEMBER_ACCOUNT);
+    DataAsync.removeData(myLoginConstant.REMEMBER_AGE);
+    DataAsync.removeData(myLoginConstant.REMEMBER_PHONENUM);
+    DataAsync.removeData(myLoginConstant.REMEMBER_GENDER);
+    DataAsync.removeData(myLoginConstant.REMEMBER_CITY);
+    DataAsync.removeData(myLoginConstant.TOKEN);
     dispatch(LoginAction.clearLoginState());
   }
 
@@ -54,7 +69,7 @@ class SideBar extends Component {
 
   render() {
     const { username } = this.props;
-    console.log("Username: ", username)
+    console.log("username: ", username)
     const { container, sbInfo, userInfoNav } = styles;
     const { isConfirm } = this.state;
     return (
@@ -103,13 +118,13 @@ class SideBar extends Component {
                 {/* onPress={this.navigateToScreen('SetUp')}  */}
                 <IconSidebar
                   source={images.settingIcon}
-                  onPress={this.getStaffInfo.bind(this)}
+                  onPress={this.getSettings.bind(this)}
                   content={'settings'}
                 />
                 {/* onPress={this.navigateToScreen('HelpAndFeadBack')}  */}
                 <IconSidebar
                   source={images.helpIcon}
-                  onPress={this.getStaffInfo.bind(this)}
+                  onPress={this.getFeedback.bind(this)}
                   content={'Help & feedbacks'}
                 />
 

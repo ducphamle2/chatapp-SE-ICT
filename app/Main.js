@@ -36,11 +36,18 @@ class Main extends Component {
 
         console.log('interceptor request begin... >>>>>>>>>>>>>>>> = ', token);
 
-        if (StringUtil.isEmpty(token)) {
+        console.log('interceptor request in redux: ', this.props.token);
+
+        if (StringUtil.isEmpty(token) && StringUtil.isEmpty(this.props.token)) {
           // do nothing
           // do
         } else {
-          config.headers.Authorization = token; // chan ly.
+          if (!StringUtil.isEmpty(token)) {
+            config.headers.Authorization = token; // chan ly.
+          }
+          else {
+            config.headers.Authorization = this.props.token;
+          }
         }
 
         return config;

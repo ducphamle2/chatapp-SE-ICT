@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, Image, View, StyleSheet, Dimensions } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('window');
 
@@ -25,7 +26,6 @@ const style = StyleSheet.create({
         marginLeft: width / 40,
         marginTop: width / 40,
         borderRadius: width / 10,
-        marginLeft: 5
     }
 });
 

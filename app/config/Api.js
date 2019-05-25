@@ -4,6 +4,7 @@ const url = {
   REGISTER: 'register',
   GET_INFO: 'getInfo',
   SET_INFO: 'setInfo',
+  FEEDBACK: 'feedback',
 };
 
 function login(payload, callback) {
@@ -64,11 +65,40 @@ function setInfo(payload, callback) {
     });
 }
 
+function addUser(payload, callback) {
+  axios({
+    method: 'POST',
+    url: url.FEEDBACK,
+    data: payload
+  })
+    .then(response => {
+      callback(true, response, null);
+    })
+    .catch(error => {
+      callback(false, null, error);
+    });
+}
+
+function getFeedback(callback) {
+  axios({
+    method: 'GET',
+    url: url.FEEDBACK,
+  })
+    .then(response => {
+      callback(true, response, null);
+    })
+    .catch(error => {
+      callback(false, null, error);
+    });
+}
+
 const api = {
   login,
   register,
   getInfo,
   setInfo,
+  addUser,
+  getFeedback,
 }
 
 export default api;
